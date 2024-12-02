@@ -73,3 +73,49 @@ az storage account create \
 - Run the deployment command in the Azure Cloud Shell.
 
 ---
+
+### **Deploying a Storage Account Using Bicep**
+
+#### **1. Create the Bicep Template**
+Save the following Bicep file as `storage-account.bicep`:
+
+```bicep
+param storageAccountName string = 'cognitozbicep123'
+param location string = 'East Asia'
+param resourceGroupName string = 'demo-az104-rg'
+
+resource storageAccount 'Microsoft.Storage/storageAccounts@2021-04-01' = {
+  name: storageAccountName
+  location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
+  kind: 'StorageV2'
+  properties: {}
+}
+```
+
+---
+
+#### **2. Deploy the Bicep Template**
+
+Run the following command in the Azure CLI to deploy the Bicep template:
+
+```bash
+az deployment group create \
+  --resource-group demo-az104-rg \
+  --template-file storage-account.bicep
+```
+
+---
+
+### **Explanation of the Bicep Template**
+1. **Parameters**:
+   - `storageAccountName`: Set to `cognitozbicep123`. You can modify this to ensure uniqueness if needed.
+   - `location`: Specifies the `East Asia` region.
+   - `resourceGroupName`: Set to `demo-az104-rg`.
+2. **Resource Definition**:
+   - The storage account is defined with `Standard_LRS` SKU and `StorageV2` kind.
+   - Location and name parameters ensure it aligns with your demo requirements.
+
+---
